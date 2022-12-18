@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{26CB3D05-0C21-4CD7-9E69-735E562EE704}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "Messages\Messages.csproj", "{C96A264D-6D98-4159-B0F8-04EF665A62E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{91785D1D-72FF-4AB4-9856-93A5CA56814C} = {108D1CD3-6057-4A83-9D40-5D5640313F1B}
 		{26CB3D05-0C21-4CD7-9E69-735E562EE704} = {108D1CD3-6057-4A83-9D40-5D5640313F1B}
+		{C96A264D-6D98-4159-B0F8-04EF665A62E0} = {108D1CD3-6057-4A83-9D40-5D5640313F1B}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{91785D1D-72FF-4AB4-9856-93A5CA56814C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -24,5 +27,9 @@ Global
 		{26CB3D05-0C21-4CD7-9E69-735E562EE704}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26CB3D05-0C21-4CD7-9E69-735E562EE704}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26CB3D05-0C21-4CD7-9E69-735E562EE704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C96A264D-6D98-4159-B0F8-04EF665A62E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C96A264D-6D98-4159-B0F8-04EF665A62E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C96A264D-6D98-4159-B0F8-04EF665A62E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C96A264D-6D98-4159-B0F8-04EF665A62E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
