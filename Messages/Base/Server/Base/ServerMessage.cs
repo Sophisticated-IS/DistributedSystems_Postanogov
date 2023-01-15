@@ -2,9 +2,9 @@
 
 namespace Messages.Base.Server.Base;
 [ProtoContract]
-[ProtoInclude(4, typeof(TableInfoMessage))]
-[ProtoInclude(5, typeof(EndStreamMessage))]
-[ProtoInclude(7, typeof(TableRawData))]
+[ProtoInclude(6, typeof(TableInfoMessage))]
+[ProtoInclude(7, typeof(EndStreamMessage))]
+[ProtoInclude(8, typeof(TableRawData))]
 public abstract class ServerMessage : Message
 {
     

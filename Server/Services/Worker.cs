@@ -86,7 +86,7 @@ public class Worker : BackgroundService
         }
         
 
-        _communicationModule = new SocketCommunicationModule();
+        _communicationModule = new KafkaCommunicationModule();
         _communicationModule.ConnectAsync(cancellationToken);
 
         return base.StartAsync(cancellationToken);
@@ -97,36 +97,46 @@ public class Worker : BackgroundService
         _logger.LogInformation("Worker socket running at: {Time}", DateTimeOffset.Now);
         while (!stoppingToken.IsCancellationRequested)
         {
-            var msg = await _communicationModule.GetMessageAsync(stoppingToken);
-            _logger.LogInformation($"Server received message: {msg}");
-            switch (msg)
+            try
             {
-                case NormalizeTableMessage normalizeTableMessage:
-                    var tableInfoMessage = new TableInfoMessage
-                    {
-                        Name = nameof(RentApartment),
-                        JsonSchema = JsonSerializer.Serialize(new RentApartment())
-                    };
-                    await _communicationModule.SendMessageAsync(tableInfoMessage, stoppingToken);
-                    break;
-                
-                case StartStreamMessage:
-                    var appContext = new ApplicationContext();
-                    foreach (var apartment in appContext.Apartments)
-                    {
-                        var data = JsonSerializer.Serialize(apartment);
-                        var rawMsg = new TableRawData
+                var msg = await _communicationModule.GetMessageAsync(stoppingToken).ConfigureAwait(false);
+                _logger.LogInformation($"Server received message: {msg}");
+                switch (msg)
+                {
+                    case NormalizeTableMessage normalizeTableMessage:
+                        var tableInfoMessage = new TableInfoMessage
                         {
-                            JsonRawData = data
+                            Name = nameof(RentApartment),
+                            JsonSchema = JsonSerializer.Serialize(new RentApartment())
                         };
-                        await _communicationModule.SendMessageAsync(rawMsg, stoppingToken);
+                        await _communicationModule.SendMessageAsync(tableInfoMessage, stoppingToken);
+                        break;
+                
+                    case StartStreamMessage:
+                        var appContext = new ApplicationContext();
+                        foreach (var apartment in appContext.Apartments)
+                        {
+                            var data = JsonSerializer.Serialize(apartment);
+                            var rawMsg = new TableRawData
+                            {
+                                JsonRawData = data
+                            };
+                            await _communicationModule.SendMessageAsync(rawMsg, stoppingToken);
                        
-                        //ждём подтверждения получения сообщения
-                        await _communicationModule.GetMessageAsync(stoppingToken);
-                    }
-                    await _communicationModule.SendMessageAsync(new EndStreamMessage(), stoppingToken);
+                            //ждём подтверждения получения сообщения
+                            await _communicationModule.GetMessageAsync(stoppingToken);
+                        }
+                        await _communicationModule.SendMessageAsync(new EndStreamMessage(), stoppingToken);
                     
-                    break;
+                        break;
+                
+                    default: Console.WriteLine("Not recognized message: " + msg);
+                        break;
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
             }
             
             

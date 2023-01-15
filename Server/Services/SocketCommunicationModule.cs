@@ -22,6 +22,8 @@ public sealed class SocketCommunicationModule : CommunicationModule
     public override async Task<Message> GetMessageAsync(CancellationToken cancellationToken)
     {
         if (_listenSocket is null) throw new NotSupportedException("Connect to Socket first!");
+        if(_clientConnectionSocket.Connected) throw new NotSupportedException("Connect to Socket first!");
+        //todo socket was closed by client 
         
         var bytesMessage = new List<byte>(1024);
         var buffer = new byte[256];
@@ -33,7 +35,6 @@ public sealed class SocketCommunicationModule : CommunicationModule
             bytesMessage.AddRange(availableBytes);
         }
         while (_clientConnectionSocket.Available > 0);
-
 
         return Serializer.DeSerialize(bytesMessage.ToArray());
     }
