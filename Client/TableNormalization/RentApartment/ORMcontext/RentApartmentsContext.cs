@@ -19,7 +19,7 @@ public sealed class RentApartmentsContext : DbContext
             $"User ID = postgres; " +
             $"Password = postgres; " +
             $"Host = localhost; " +
-            $"Port = 5434; " +
+            $"Port = 5436; " +
             $"CommandTimeout=180;" +
             $"Pooling = true; " +
             $"Database = Normalized3NFDatabase";
