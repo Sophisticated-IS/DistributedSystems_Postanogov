@@ -6,6 +6,7 @@ using Server;
 //Kafka server
 //C:\kafka_2.12-3.3.1\bin\windows>start kafka-server-start.bat C:\kafka_2.12-3.3.1\config\server.properties
 
+//todo Выложить этот пример со старым API на гитхаб
 
 IHost host = Host.CreateDefaultBuilder(args)
                  .ConfigureServices(services =>
