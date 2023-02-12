@@ -17,7 +17,7 @@ public sealed class NormalizaionTableApiServer : NormalizationTableApi.Normaliza
         var inputMsg = request.Message.ToByteArray();
         Input = Serializer.DeSerialize(inputMsg);
         
-        SpinWait.SpinUntil(() => Answer is null);
+        SpinWait.SpinUntil(() => Answer is not null);
 
         var ret = new RetReply()
         {

@@ -32,7 +32,7 @@ public sealed class GrpcCommunicationModule : CommunicationModule
 
     public override Task<Message> GetMessageAsync(CancellationToken cancellationToken)
     {
-        SpinWait.SpinUntil(() => _grpcService.Input is null);
+        SpinWait.SpinUntil(() => _grpcService.Input is not null);
         var grpcServiceInput = _grpcService.Input;
         _grpcService.Input = null;
 
