@@ -2,6 +2,8 @@
 using Grpc.Core;
 using Grpc.DataApi;
 using Messages.Base;
+using Microsoft.AspNetCore.Authentication.Certificate;
+using Microsoft.AspNetCore.Authorization;
 using Serializer = Messages.Serializer;
 
 namespace Server.GrpcServer;
@@ -11,6 +13,7 @@ public sealed class NormalizaionTableApiServer : NormalizationTableApi.Normaliza
     public Message? Answer { get; set; }
     public Message? Input { get; set; }
     
+    [Authorize(AuthenticationSchemes = CertificateAuthenticationDefaults.AuthenticationScheme)]
     public override Task<RetReply> SendDataMessage(ArgRequest request, ServerCallContext context)
     {
         Answer = null;
