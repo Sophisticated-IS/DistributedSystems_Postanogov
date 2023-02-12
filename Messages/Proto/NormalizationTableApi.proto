@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "Grpc.DataApi";
+
+service NormalizationTableApi {
+  
+  rpc SendDataMessage(ArgRequest) returns (RetReply) {}
+}
+
+
+message ArgRequest {
+  bytes message = 1;
+}
+
+message RetReply {
+  bytes message = 1;
+}
