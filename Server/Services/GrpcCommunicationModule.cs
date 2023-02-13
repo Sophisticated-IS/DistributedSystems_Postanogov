@@ -13,7 +13,9 @@ public sealed class GrpcCommunicationModule : CommunicationModule
 
     public override async Task ConnectAsync(CancellationToken cancellationToken)
     {
-         _grpcService = new NormalizaionTableApiServer();
+        _grpcService = new NormalizaionTableApiServer();
+        string clientCert = File.ReadAllText(@"C:\Users\Igor SI\RiderProjects\DistributedSystems_PostanogovIS\Client\Services\client.crt");
+        string clientKey = File.ReadAllText(@"C:\Users\Igor SI\RiderProjects\DistributedSystems_PostanogovIS\Client\Services\clientDecrypted.key");
          _server = new Grpc.Core.Server()
         {
             Services =
@@ -22,12 +24,11 @@ public sealed class GrpcCommunicationModule : CommunicationModule
             },
             Ports =
             {
-                new ServerPort("[::]", 5665, ServerCredentials.Insecure)
+                new ServerPort("[::]", 5001, new SslServerCredentials(new[]{new KeyCertificatePair(clientCert, clientKey)}))
             }
         };
         _server.Start();  
-         
-
+        
     }
 
     public override Task<Message> GetMessageAsync(CancellationToken cancellationToken)
